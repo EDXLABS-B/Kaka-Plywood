@@ -1,0 +1,1 @@
+package com.kakaplywoods.crm;import org.springframework.data.jpa.repository.JpaRepository;import java.util.*;public interface ActivityRepository extends JpaRepository<LeadActivity,UUID>{List<LeadActivity> findByLeadIdOrderByCreatedAtDesc(UUID leadId);}
