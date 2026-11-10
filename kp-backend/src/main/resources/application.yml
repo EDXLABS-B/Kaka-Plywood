@@ -25,9 +25,10 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
+
   mail:
     host: ${SMTP_HOST:smtp.gmail.com}
-    port: ${SMTP_PORT:587}
+    port: ${SMTP_PORT:465}
     username: ${SMTP_USERNAME:}
     password: ${SMTP_PASSWORD:}
     properties:
@@ -35,11 +36,14 @@ spring:
         smtp:
           auth: ${SMTP_AUTH:true}
           starttls:
-            enable: ${SMTP_STARTTLS:true}
-            required: ${SMTP_STARTTLS:true}
-          connectiontimeout: 5000
-          timeout: 5000
-          writetimeout: 5000
+            enable: ${SMTP_STARTTLS:false}
+            required: ${SMTP_STARTTLS:false}
+          ssl:
+            enable: ${SMTP_SSL:true}
+          connectiontimeout: 10000
+          timeout: 10000
+          writetimeout: 10000
+
 
 management:
   endpoints:
