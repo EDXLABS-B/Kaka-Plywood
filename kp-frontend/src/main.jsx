@@ -2,7 +2,7 @@ import React,{useEffect,useMemo,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {BrowserRouter,Link,useNavigate} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';import 'bootstrap-icons/font/bootstrap-icons.css';import './styles.css';
-const API='/api';
+const API = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 const brands=[['SKY','Designer Laminates'],['National','Laminart'],['V PLUS','Acrylic Laminates'],['RealBond','Plywood']];
 const products=[['Plywood','Strong · Durable · Versatile','bi-layers'],['Laminates','Designer surfaces & finishes','bi-palette'],['Veneers','Natural · Elegant · Premium','bi-leaf'],['MDF & Boards','Smooth finish · Multi-purpose','bi-stack']];
 const apps=[['Kitchen Interiors','bi-house'],['Wardrobes','bi-door-closed'],['Wall Panels','bi-grid-3x3'],['Commercial Interiors','bi-building'],['Furniture','bi-lamp']];
