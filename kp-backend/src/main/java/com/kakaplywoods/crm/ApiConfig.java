@@ -4,6 +4,7 @@ package com.kakaplywoods.crm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -20,11 +21,15 @@ import java.util.List;
 public class ApiConfig {
 
     @Bean
-    public SecurityFilterChain security(HttpSecurity http) throws Exception {
+    public SecurityFilterChain security(
+            HttpSecurity http,
+            CorsConfigurationSource corsConfigurationSource) throws Exception {
+
         return http
                 .csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(
                                 "/api/public/**",
                                 "/actuator/health",
@@ -50,7 +55,7 @@ public class ApiConfig {
     }
 
     @Bean
-    public CorsConfigurationSource cors() {
+    public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration config = new CorsConfiguration();
 
@@ -59,16 +64,15 @@ public class ApiConfig {
         ));
 
         config.setAllowedMethods(List.of(
-                "GET", "POST", "PATCH",
-                "PUT", "DELETE", "OPTIONS"
+                "GET",
+                "POST",
+                "PATCH",
+                "PUT",
+                "DELETE",
+                "OPTIONS"
         ));
 
-        config.setAllowedHeaders(List.of(
-                "Authorization",
-                "Content-Type",
-                "X-Requested-With"
-        ));
-
+        config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
